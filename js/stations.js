@@ -1,5 +1,5 @@
 var stations = [
-    {"id": 0, "name":"The Beat", "country": "Norway", "url":"http://stream.thebeat.no/beat128.mp3"},
+    {"id": 0, "name":"The Beat", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
     {"id": 1, "name":"J-Pop Powerplay Kawaii", "country": "Japan", "url":"https://kathy.torontocast.com:3060/;?type=http"},
     {"id": 2, "name":"J-Pop Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
     {"id": 3, "name":"J-Rock Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},
