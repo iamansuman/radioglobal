@@ -1,0 +1,36 @@
+@media only screen and (max-width: 600px) {
+    .box{
+        height: 65vh;
+        margin-top: 10px;
+        width: 90%;
+    }
+    .indicator{
+        display: none;
+    }
+    .nations{
+        display: none;
+    }
+    #allbox li, #favbox li{
+        padding-top: 10px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    #player{
+        padding: 5px;
+        height: auto;
+        flex-direction: column;
+    }
+    #nowplaying{
+        font-size: medium;
+        width: 80%;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    .btns{
+        width: 90%;
+        justify-content: space-around;
+    }
+    .btns img{
+        width: 40px;
+        height: 40px;
+    }
+}

@@ -1,0 +1,115 @@
+var audele = document.getElementById('aud');
+var browselist = document.getElementById('allbox');
+var favlist = document.getElementById('favbox');
+var nply = document.getElementById('nowplaying');
+
+
+function play(){
+	if (audele.src != ""){
+		audele.play();
+		document.getElementsByClassName('btns')[0].children[2].style.display = 'block';
+		document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
+	}
+}
+
+function pause(){
+	document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+	document.getElementsByClassName('btns')[0].children[2].style.display = 'none';
+	audele.pause();
+}
+
+function pre(){
+	if (nowplaying.mode == 'bwr'){
+		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
+			nowplaying.index = (nowplaying.index - 1 + stations.length) % stations.length;
+			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			audele.src = stations[nowplaying.index].url;
+			play();
+			navigator.mediaSession.metadata = new MediaMetadata({
+				title: stations[nowplaying.index].name
+			});
+		}
+	} else if (nowplaying.mode == 'fav'){
+		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
+			nowplaying.index = (nowplaying.index - 1 + favstations.length) % favstations.length;
+			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			audele.src = favstations[nowplaying.index].url;
+			play();
+			navigator.mediaSession.metadata = new MediaMetadata({
+				title: stations[nowplaying.index].name
+			});
+		}
+	}
+}
+
+function next(){
+	if (nowplaying.mode == 'bwr'){
+		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
+			nowplaying.index = (nowplaying.index + 1) % stations.length;
+			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			audele.src = stations[nowplaying.index].url;
+			play();
+			navigator.mediaSession.metadata = new MediaMetadata({
+				title: stations[nowplaying.index].name
+			});
+		}
+	} else if (nowplaying.mode == 'fav') {
+		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
+			nowplaying.index = (nowplaying.index + 1) % favstations.length;
+			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			audele.src = favstations[nowplaying.index].url;
+			play();
+			navigator.mediaSession.metadata = new MediaMetadata({
+				title: stations[nowplaying.index].name
+			});
+		}
+	}
+}
+
+function fav(){}
+
+function changeindicator(){
+	document.getElementById('brwbtn').style.backgroundColor = 'rgba(0, 0, 0)';
+	document.getElementById('favbtn').style.backgroundColor = 'rgba(0, 0, 0)';
+	if (document.location.hash == "#fav"){
+		document.getElementsByClassName('indicator')[0].innerText = "Favorites";
+	} else {
+		document.getElementsByClassName('indicator')[0].innerText = "Browse";
+	}
+}
+
+function changeindicatormobile(){
+	if (document.location.hash == "#fav"){
+		document.getElementById('brwbtn').style.backgroundColor = 'rgba(0, 0, 0)';
+		document.getElementById('favbtn').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+	} else {
+		document.getElementById('favbtn').style.backgroundColor = 'rgba(0, 0, 0)';
+		document.getElementById('brwbtn').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+	}
+}
+
+window.addEventListener('resize', (e) => {
+	e.preventDefault();
+	innerWidth >= 600 ? changeindicator() : changeindicatormobile();
+})
+
+audele.addEventListener('play', e => {play()});
+audele.addEventListener('pause', e => {pause()});
+
+window.addEventListener('keydown', (e) => {
+	if(e.keyCode == 32){
+		e.preventDefault();
+		e.stopPropagation();
+		audele.paused ? play() : pause();
+	}
+})
+
+navigator.mediaSession.metadata = new MediaMetadata({
+    artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
+});
+
+navigator.mediaSession.setActionHandler('play', play())
+navigator.mediaSession.setActionHandler('pause', pause())
+navigator.mediaSession.setActionHandler('stop', function(){pause()});
+navigator.mediaSession.setActionHandler('previoustrack', function() {pre()});
+navigator.mediaSession.setActionHandler('nexttrack', function() {next();});
