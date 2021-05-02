@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Listen to news & music">
+    <link rel="manifest" href="./manifest.webmanifest">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/resp.css">
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
@@ -37,14 +41,16 @@
         <audio id="aud" title=""></audio>
         <span id="nowplaying">- - - - - - -</span>
         <div class="btns">
-            <img src="./svg/pre.svg"  onclick="pre()">
-            <img src="./svg/play.svg"  onclick="play()">
-            <img src="./svg/pause.svg" style="display: none;" onclick="pause()">
-            <img src="./svg/next.svg"  onclick="next()">
-            <img src="./svg/notfav.svg"  onclick="fav()">
+            <img src="./svg/pre.svg" onclick="pre()" ondragstart="return false;">
+            <img src="./svg/play.svg" onclick="play()" ondragstart="return false;">
+            <img src="./svg/pause.svg" style="display: none;" onclick="pause()" ondragstart="return false;">
+            <img src="./svg/next.svg" onclick="next()" ondragstart="return false;">
+            <img src="./svg/notfav.svg" onclick="fav()" ondragstart="return false;">
+            <img src="./svg/fav.svg" style="display: none;" onclick="rmfav()" ondragstart="return false;">
         </div>
         
     </div>
+    <script defer src="https://unpkg.com/localbase@0.7.5/dist/localbase.min.js"></script>
     <script defer src="./js/stations.js"></script>
     <script defer src="./js/script.js"></script>
     <script defer src="./js/radio.js"></script>

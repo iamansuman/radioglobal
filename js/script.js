@@ -50,7 +50,8 @@ function next(){
 			audele.src = stations[nowplaying.index].url;
 			play();
 			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name
+				title: stations[nowplaying.index].name,
+				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
 			});
 		}
 	} else if (nowplaying.mode == 'fav') {
@@ -60,13 +61,38 @@ function next(){
 			audele.src = favstations[nowplaying.index].url;
 			play();
 			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name
+				title: stations[nowplaying.index].name,
+				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
 			});
 		}
 	}
 }
 
-function fav(){}
+function fav(){
+	if (nowplaying.index != null){
+		db.collection('favstns').add(stations[nowplaying.index]).then(() => {
+			document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
+			document.getElementsByClassName('btns')[0].children[5].style.display = 'block';
+			getFavStaions();
+		});
+	}
+}
+
+function rmfav(){
+	if (nowplaying != null){
+		db.collection('favstns').doc({url: nowplaying.url}).delete().then(() => {
+			document.getElementsByClassName('btns')[0].children[5].style.display = 'none';
+			document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
+			getFavStaions();
+		});
+		nowplaying.mode = 'bwr';
+		let i;
+		stations.forEach((element, index) => {
+			i = element.url == nowplaying.url ? index : 0 ;
+		});
+		nowplaying.index = i;
+	}
+}
 
 function changeindicator(){
 	document.getElementById('brwbtn').style.backgroundColor = 'rgba(0, 0, 0)';

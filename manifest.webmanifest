@@ -1,0 +1,15 @@
+{
+    "background_color": "#D77F4A",
+    "description": "Listen to News and Music worldwide",
+    "display": "fullscreen",
+    "icons": [
+      {
+        "src": "img/radio.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "name": "Radio Global",
+    "short_name": "Radio",
+    "start_url": "index.html"
+  }
