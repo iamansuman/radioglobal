@@ -5,6 +5,6 @@ Help this project by -
 - Modifying / creating code
 - Indexing new radio staions with thier metadata
 
-`Every non-spam commits are appreciated here`
+`Every non-spam commits is appreciated here`
  
 [Visit RadioGlobal](http://radioglobal.ga)
