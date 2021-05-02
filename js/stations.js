@@ -9,5 +9,5 @@ var stations = [
     {"name":"J-Pop Powerplay Kawaii", "country": "Japan", "url":"https://kathy.torontocast.com:3060/;?type=http"},
     {"name":"J-Pop Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
     {"name":"J-Rock Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},
-    {"name":"Third Rock", "country": "ISS (Outer Space)", "url":"https://rfcmedia3.streamguys1.com/thirdrock.mp3"},
+    {"name":"Third Rock", "country": "USA (NASA)", "url":"https://rfcmedia3.streamguys1.com/thirdrock.mp3"},
 ]
