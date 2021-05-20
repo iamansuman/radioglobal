@@ -30,7 +30,6 @@ export default function Home({ navigation }) {
       duration: 2000,
       useNativeDriver: false,
     }).start();
-    console.log("animating header !");
   };
   // State which contains the object for the station currently being played
   const [currentPlaying, setCurrentPlaying] = useState({
