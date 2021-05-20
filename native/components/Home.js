@@ -7,7 +7,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Animated,
+  // Animated,
 } from "react-native";
 import { Audio } from "expo-av";
 import ListItem from "./ListItem";
@@ -16,21 +16,22 @@ import { Ionicons } from "@expo/vector-icons";
 // main code
 
 export default function Home({ navigation }) {
-  const [startup, setStartup] = useState(false);
-  const headerOpacity = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    if (!startup) {
-      animatedHeader();
-    }
-  });
-  const animatedHeader = () => {
-    setStartup(true);
-    Animated.timing(headerOpacity, {
-      toValue: 1,
-      duration: 2000,
-      useNativeDriver: false,
-    }).start();
-  };
+  // const [startup, setStartup] = useState(false);
+  // const headerOpacity = useRef(new Animated.Value(0)).current;
+  // Header Animation
+  // useEffect(() => {
+  //   if (!startup) {
+  //     animatedHeader();
+  //   }
+  // });
+  // const animatedHeader = () => {
+  //   setStartup(true);
+  //   Animated.timing(headerOpacity, {
+  //     toValue: 1,
+  //     duration: 2000,
+  //     useNativeDriver: false,
+  //   }).start();
+  // };
   // State which contains the object for the station currently being played
   const [currentPlaying, setCurrentPlaying] = useState({
     name: "",
