@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "RadioGlobal",
+    "slug": "RadioGlobal",
+    "version": "1.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/newINVBWicon2.png",
+    "splash": {
+      "image": "./assets/BWicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/newINVBWicon2.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.glappy.radioglobal"
+    },
+    "web": {
+      "favicon": "./assets/newINVBWicon.png"
+    }
+  }
+}
