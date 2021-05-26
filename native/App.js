@@ -1,5 +1,5 @@
 // Importing important stuffs
-import React, { useState } from "react";
+import React from "react";
 import About from "./components/About";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";

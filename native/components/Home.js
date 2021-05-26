@@ -1,33 +1,126 @@
 // importing important stuffs
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  FlatList,
   Text,
   Image,
   TouchableOpacity,
-  // Animated,
+  Animated,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { Audio } from "expo-av";
 import ListItem from "./ListItem";
-import { Feather } from "@expo/vector-icons";
-
+import { Feather, Ionicons } from "@expo/vector-icons";
+import * as FileSystem from "expo-file-system";
 // main code
 
 export default function Home({ navigation }) {
+  // can't really explain this state
+  const [startupCounter, setStartupCounter] = useState(0);
+  // state that helps run a function on app startup
+  const [startup, setStartup] = useState(true);
+  // state to set the mode
+  const [onlyFavs, setOnlyFavs] = useState(false);
+  // state to store all the liked stations
+  const [favs, setFavs] = useState([]);
+  // state to check if the current playing is liked or not
+  const [isLiked, setIsLiked] = useState(false);
+  // state to store liked stations in a writable format
+  const [favStationlist, setfavStationlist] = useState([]);
+  // state to check if station data is fetched
+  const [fetchedData, setFetchedData] = useState(false);
   // State which contains the object for the station currently being played
-  const [currentPlaying, setCurrentPlaying] = useState({
-    name: "",
-  });
+  const [currentPlaying, setCurrentPlaying] = useState();
   // state to store the list of stations
   const [stations, setStations] = useState();
-  // fetching the stations list from database
-  fetch("https://radioglobal.ga/crs-pf/stations.json")
-    .then((res) => res.json())
-    .then((result) => {
-      setStations(result);
+  // Animated value for control box animation
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  // Animated value for stationlist animation
+  const listFadeAnim = useRef(new Animated.Value(1)).current;
+
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+  const listFadeIn = () => {
+    // Will change listFadeAnim value to 1 in 5 seconds
+    Animated.timing(listFadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+  const writeFavs = async () => {
+    // writes data about the liked station in HDD
+    await FileSystem.writeAsStringAsync(
+      FileSystem.documentDirectory + "/fav.json/",
+      favStationlist.toString(),
+      {
+        encoding: FileSystem.EncodingType.UTF8,
+      }
+    );
+  };
+  const readFavsJson = async () => {
+    // reads data about liked stations from HDD
+    let favsJsonInfo = await FileSystem.readAsStringAsync(
+      FileSystem.documentDirectory + "/fav.json/",
+      {
+        encoding: FileSystem.EncodingType.UTF8,
+      }
+    );
+    favsJsonInfo = favsJsonInfo.split(",");
+    var tempListFavItems = [];
+    favsJsonInfo.forEach((element) => {
+      stations.forEach((ele) => {
+        if (element == ele.name) {
+          tempListFavItems.push(ele);
+        }
+      });
     });
+    setfavStationlist(favsJsonInfo);
+    setFavs(tempListFavItems);
+  };
+
+  if (!fetchedData) {
+    // fetches station data from the website
+    fetch("https://radioglobal.ga/crs-pf/stations.json")
+      .then((res) => res.json())
+      .then((result) => {
+        setStations(result);
+      });
+    setFetchedData(true);
+  }
+  // function to add currentPlaying station to favs
+  const addItemToFavs = (item) => {
+    let temp = favStationlist;
+    temp.push(item.name);
+    setfavStationlist(temp);
+    writeFavs();
+    let tempFavs = favs;
+    tempFavs.push(item);
+    setFavs(tempFavs);
+  };
+  // function to remove currentPlaying station from favs
+  const removeItemFromFavs = (item) => {
+    let temp = favStationlist;
+    let index = temp.indexOf(item.name);
+    if (index > -1) {
+      temp.splice(index, 1);
+    }
+    setfavStationlist(temp);
+    writeFavs();
+    let tempFavs = favs;
+    index = tempFavs.indexOf(item);
+    if (index > -1) {
+      tempFavs.splice(index, 1);
+    }
+    setFavs(tempFavs);
+  };
   // creating a sound player
   const soundObject = useRef(new Audio.Sound());
   // state to check if the player is paused
@@ -48,16 +141,31 @@ export default function Home({ navigation }) {
   const openMenu = () => {
     navigation.openDrawer();
   };
+  // function to check if currently played station is liked or not
+  const checkIfliked = (item) => {
+    var result = false;
+    favs.forEach((element) => {
+      if (item.name == element.name) {
+        result = true;
+      }
+    });
+    setIsLiked(result);
+  };
 
   // function to play/pause audio
   const playAudio = async (item) => {
-    if (pauseState) {
-      await soundObject.current.unloadAsync();
-    } else {
-      await soundObject.current.pauseAsync();
-      await soundObject.current.unloadAsync();
-    }
     setCurrentPlaying(item);
+
+    try {
+      if (pauseState) {
+        await soundObject.current.unloadAsync();
+      } else {
+        await soundObject.current.pauseAsync();
+        await soundObject.current.unloadAsync();
+      }
+    } catch (e) {
+      console.log(e);
+    }
 
     try {
       await soundObject.current.loadAsync({
@@ -69,6 +177,47 @@ export default function Home({ navigation }) {
       console.log(error);
     }
   };
+  // This func runs on app startup
+  const startupFunc = async () => {
+    let result = await FileSystem.getInfoAsync(
+      FileSystem.documentDirectory + "/fav.json/"
+    );
+    if (result.exists) {
+      await readFavsJson();
+      setStartup(false);
+    } else {
+      await FileSystem.writeAsStringAsync(
+        FileSystem.documentDirectory + "/fav.json/",
+        "",
+        {
+          encoding: FileSystem.EncodingType.UTF8,
+        }
+      );
+
+      startupFunc();
+    }
+  };
+  // runs a function when current palying station is changed
+  useEffect(() => {
+    fadeIn();
+    try {
+      checkIfliked(currentPlaying);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentPlaying]);
+  // runs a function weh nstation data is fetched
+  useEffect(() => {
+    if (startup && startupCounter >= 1) {
+      startupFunc();
+    } else {
+      setStartupCounter(startupCounter + 1);
+    }
+  }, [stations]);
+  // runs a function when mode is changed
+  useEffect(() => {
+    listFadeIn();
+  }, [onlyFavs]);
   return (
     // Home page
     <View style={styles.container}>
@@ -88,14 +237,52 @@ export default function Home({ navigation }) {
         {/* ------------------------ */}
       </View>
       {/* --------------------- */}
+      {/* Mode changer */}
+      <Animated.View
+        style={[
+          styles.mode,
+          {
+            opacity: listFadeAnim,
+          },
+        ]}
+      >
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Animated.timing(listFadeAnim, {
+              toValue: 0,
+              duration: 500,
+              useNativeDriver: false,
+            }).start(() => {
+              setOnlyFavs(!onlyFavs);
+            });
+          }}
+        >
+          <Text style={styles.modeText}>
+            {onlyFavs ? "Only favourites" : "All stations"}
+          </Text>
+        </TouchableWithoutFeedback>
+        {/* ------------------------------ */}
+      </Animated.View>
       {/* displaying the available stations  */}
-      <FlatList
-        style={styles.list}
-        data={stations}
+      <Animated.FlatList
+        style={[
+          styles.list,
+          {
+            opacity: listFadeAnim,
+          },
+        ]}
+        data={onlyFavs ? favs : stations}
+        keyExtractor={(item, index) => item.url}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
-              playAudio(item);
+              Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: false,
+              }).start(async () => {
+                await playAudio(item);
+              });
             }}
           >
             <ListItem item={item} />
@@ -103,20 +290,64 @@ export default function Home({ navigation }) {
         )}
       />
       {/* audio controls */}
-      <View style={styles.player}>
+      <Animated.View
+        style={[
+          styles.player,
+          {
+            opacity: fadeAnim,
+          },
+        ]}
+      >
         <View style={styles.titleBox}>
-          <Text style={styles.text}>{currentPlaying.name}</Text>
+          <View style={styles.stationTitle}>
+            <Text style={styles.text}>
+              {currentPlaying != null
+                ? currentPlaying.name
+                : "tap on a station to get started"}
+            </Text>
+            <Text style={styles.country}>
+              {currentPlaying != null ? currentPlaying.country : ""}
+            </Text>
+          </View>
+          {currentPlaying != null ? (
+            <TouchableOpacity
+              onPress={() => {
+                if (isLiked) {
+                  setIsLiked(false);
+                  removeItemFromFavs(currentPlaying);
+                } else {
+                  setIsLiked(true);
+                  addItemToFavs(currentPlaying);
+                }
+              }}
+            >
+              <Ionicons
+                name={isLiked ? "heart-sharp" : "heart-outline"}
+                size={30}
+                color="white"
+                style={styles.likeButton}
+              />
+            </TouchableOpacity>
+          ) : (
+            <Text></Text>
+          )}
         </View>
 
         <View style={styles.controls}>
           {/* Previous Button */}
           <TouchableOpacity
             onPress={async () => {
-              playAudio(
-                findIndexOf(currentPlaying) > 0
-                  ? stations[findIndexOf(currentPlaying) - 1]
-                  : stations[stations.length - 1]
-              );
+              Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: false,
+              }).start(async () => {
+                await playAudio(
+                  findIndexOf(currentPlaying) > 0
+                    ? stations[findIndexOf(currentPlaying) - 1]
+                    : stations[stations.length - 1]
+                );
+              });
             }}
           >
             <Feather name={"skip-back"} color="white" size={60} />
@@ -141,17 +372,23 @@ export default function Home({ navigation }) {
           {/* next button */}
           <TouchableOpacity
             onPress={async () => {
-              playAudio(
-                findIndexOf(currentPlaying) < stations.length - 1
-                  ? stations[findIndexOf(currentPlaying) + 1]
-                  : stations[0]
-              );
+              Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 500,
+                useNativeDriver: false,
+              }).start(async () => {
+                await playAudio(
+                  findIndexOf(currentPlaying) < stations.length - 1
+                    ? stations[findIndexOf(currentPlaying) + 1]
+                    : stations[0]
+                );
+              });
             }}
           >
             <Feather name="skip-forward" color="white" size={60} />
           </TouchableOpacity>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -177,13 +414,18 @@ const styles = StyleSheet.create({
   },
   titleBox: {
     paddingTop: 20,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    flexDirection: "row",
+    marginHorizontal: 20,
+  },
+  country: {
+    color: "white",
   },
   controls: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    paddingTop: 25,
+    paddingTop: 15,
   },
   image: {
     width: 60,
@@ -218,5 +460,16 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     flexDirection: "row",
+  },
+  mode: {
+    paddingLeft: 20,
+    marginBottom: 5,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  modeText: {
+    fontSize: 20,
+    color: "white",
+    letterSpacing: 1,
   },
 });
