@@ -2,7 +2,7 @@
   "expo": {
     "name": "RadioGlobal",
     "slug": "RadioGlobal",
-    "version": "1.2.0",
+    "version": "1.8.0",
     "orientation": "portrait",
     "icon": "./assets/newINVBWicon2.png",
     "splash": {

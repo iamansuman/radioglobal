@@ -84,7 +84,7 @@ export default function About({ navigation }) {
         </TouchableOpacity>
         {/* -------------------------- */}
       </View>
-      <Text style={styles.version}>v2.0.0</Text>
+      <Text style={styles.version}>v1.8.0</Text>
     </View>
   );
 }
