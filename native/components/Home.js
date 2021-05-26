@@ -12,7 +12,13 @@ import {
 import { Audio } from "expo-av";
 import ListItem from "./ListItem";
 import { Feather, Ionicons } from "@expo/vector-icons";
-import * as FileSystem from "expo-file-system";
+import {
+  writeAsStringAsync,
+  readAsStringAsync,
+  getInfoAsync,
+  documentDirectory,
+  EncodingType,
+} from "expo-file-system";
 // main code
 
 export default function Home({ navigation }) {
@@ -57,20 +63,20 @@ export default function Home({ navigation }) {
   };
   const writeFavs = async () => {
     // writes data about the liked station in HDD
-    await FileSystem.writeAsStringAsync(
-      FileSystem.documentDirectory + "/fav.json/",
+    await writeAsStringAsync(
+      documentDirectory + "/fav.json/",
       favStationlist.toString(),
       {
-        encoding: FileSystem.EncodingType.UTF8,
+        encoding: EncodingType.UTF8,
       }
     );
   };
   const readFavsJson = async () => {
     // reads data about liked stations from HDD
-    let favsJsonInfo = await FileSystem.readAsStringAsync(
-      FileSystem.documentDirectory + "/fav.json/",
+    let favsJsonInfo = await readAsStringAsync(
+      documentDirectory + "/fav.json/",
       {
-        encoding: FileSystem.EncodingType.UTF8,
+        encoding: EncodingType.UTF8,
       }
     );
     favsJsonInfo = favsJsonInfo.split(",");
@@ -126,10 +132,10 @@ export default function Home({ navigation }) {
   // state to check if the player is paused
   const [pauseState, setPauseState] = useState(true);
   // function to find index of a station in the stations list
-  const findIndexOf = (item) => {
+  const findIndexOf = (item, array) => {
     var index = 0;
     var result = 99;
-    stations.forEach((element) => {
+    array.forEach((element) => {
       if (element.url == item.url) {
         result = index;
       }
@@ -179,20 +185,14 @@ export default function Home({ navigation }) {
   };
   // This func runs on app startup
   const startupFunc = async () => {
-    let result = await FileSystem.getInfoAsync(
-      FileSystem.documentDirectory + "/fav.json/"
-    );
+    let result = await getInfoAsync(documentDirectory + "/fav.json/");
     if (result.exists) {
       await readFavsJson();
       setStartup(false);
     } else {
-      await FileSystem.writeAsStringAsync(
-        FileSystem.documentDirectory + "/fav.json/",
-        "",
-        {
-          encoding: FileSystem.EncodingType.UTF8,
-        }
-      );
+      await writeAsStringAsync(documentDirectory + "/fav.json/", "", {
+        encoding: EncodingType.UTF8,
+      });
 
       startupFunc();
     }
@@ -343,9 +343,13 @@ export default function Home({ navigation }) {
                 useNativeDriver: false,
               }).start(async () => {
                 await playAudio(
-                  findIndexOf(currentPlaying) > 0
-                    ? stations[findIndexOf(currentPlaying) - 1]
-                    : stations[stations.length - 1]
+                  !onlyFavs
+                    ? findIndexOf(currentPlaying, stations) > 0
+                      ? stations[findIndexOf(currentPlaying, stations) - 1]
+                      : stations[stations.length - 1]
+                    : findIndexOf(currentPlaying, favs) > 1
+                    ? favs[findIndexOf(currentPlaying, favs) - 1]
+                    : favs[favs.length - 1]
                 );
               });
             }}
@@ -378,9 +382,14 @@ export default function Home({ navigation }) {
                 useNativeDriver: false,
               }).start(async () => {
                 await playAudio(
-                  findIndexOf(currentPlaying) < stations.length - 1
-                    ? stations[findIndexOf(currentPlaying) + 1]
-                    : stations[0]
+                  !onlyFavs
+                    ? findIndexOf(currentPlaying, stations) <
+                      stations.length - 1
+                      ? stations[findIndexOf(currentPlaying, stations) + 1]
+                      : stations[0]
+                    : findIndexOf(currentPlaying, favs) < favs.length - 1
+                    ? favs[findIndexOf(currentPlaying, favs) + 1]
+                    : favs[0]
                 );
               });
             }}
