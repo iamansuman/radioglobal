@@ -52,7 +52,7 @@ export default function About({ navigation }) {
         >
           <Image
             style={styles.image}
-            source={require("../assets/ansuman.png")}
+            source={require("../assets/BWansuman.png")}
           />
         </TouchableOpacity>
         <TouchableOpacity

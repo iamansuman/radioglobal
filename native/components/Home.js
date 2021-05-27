@@ -185,6 +185,9 @@ export default function Home({ navigation }) {
   };
   // This func runs on app startup
   const startupFunc = async () => {
+    await Audio.setAudioModeAsync({
+      staysActiveInBackground: true,
+    });
     let result = await getInfoAsync(documentDirectory + "/fav.json/");
     if (result.exists) {
       await readFavsJson();
