@@ -10,5 +10,6 @@
     {"name":"J-Pop Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
     {"name":"J-Rock Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},
     {"name":"Third Rock", "country": "US", "url":"https://rfcmedia3.streamguys1.com/thirdrock.mp3"},
-    {"name":"KEXP", "country": "US", "url":"https://kexp-mp3-128.streamguys1.com/kexp128.mp3"}
+    {"name":"KEXP", "country": "US", "url":"https://kexp-mp3-128.streamguys1.com/kexp128.mp3"},
+    {"name":"Washington's Top News", "country": "US", "url":"https://22203.live.streamtheworld.com/WTOPFMAAC.aac"}
 ]
