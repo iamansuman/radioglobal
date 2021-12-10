@@ -139,7 +139,7 @@ body{
     border-radius: 1.5em;
 }
 
-#allbox, #favbox{
+.box ul{
     list-style-type: none;
     width: 80%;
     overflow-x: hidden;
@@ -147,7 +147,7 @@ body{
     max-height: 50vh;
 }
 
-#allbox li, #favbox li{
+.box ul li{
     display: flex;
     justify-content: space-between;
 }
