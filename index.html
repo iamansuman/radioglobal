@@ -23,20 +23,25 @@
             <li><a id="brwbtn" href="#all">Browse</a></li>
             <li><a id="favbtn" href="#fav">Favorites</a></li>
         </ul>
-        <img src="./svg/search.svg" onclick="document.getElementById('stn-search-query').classList.toggle('search-mode')" ondragstart="return false;" style="height: 4vh; cursor: pointer; z-index: 101;">
-        <input type="text" id="stn-search-query" placeholder="Search RadioGlobal (All)..." style="position: fixed; padding: 0 5vw; background-color: #000; outline: none; border: none; border-left: 10px solid #fff; width: 100vw; height: 8vh; z-index: 100; left: 100vw; transition: 750ms;"/>
+        <img src="./svg/search.svg" id="schBtn" ondragstart="return false;" style="height: 4vh; cursor: pointer; z-index: 101;">
+        <input type="text" id="stn-search-query" placeholder="Search a Radio Station..." onkeyup="searchStation(this.value)" style="position: fixed; padding: 0 5vw; background-color: #000; outline: none; border: none; border-left: 10px solid #fff; width: 100vw; height: 8vh; z-index: 100; left: 100vw; transition: 750ms;"/>
     </div>
 
     <div id="interact">
         <section id="all">
             <div class="indicator">Browse</div>
             <div class="box">
-                <ul id="allbox">Browse 🔍</ul>
+                <ul id="allbox">Browse 🎵</ul>
             </div>
         </section>
         <section id="fav">
             <div class="box">
                 <ul id="favbox">No Favorites 😢</ul>
+            </div>
+        </section>
+        <section id="sch">
+            <div class="box">
+                <ul id="searchbox">Type Your Query in Search Text Box 🔍</ul>
             </div>
         </section>
     </div>
