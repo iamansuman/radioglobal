@@ -32,7 +32,7 @@ body{
     text-decoration: none;
 }
 
-.search-mode{ left: 0 !important; transition: 1.5s; }
+.search-mode{ left: 0 !important; transition: 750ms; }
 
 #brwbtn, #favbtn{
     background-color: #000;

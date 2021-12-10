@@ -4,9 +4,21 @@ var favlist = document.getElementById('favbox');
 var nply = document.getElementById('nowplaying');
 
 
+
 function play(){
 	if (audele.src != ""){
-		audele.play();
+		audele.play().then(() => { 
+			navigator.mediaSession.metadata = new MediaMetadata({
+				title: stations[nowplaying.index].name,
+				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
+			});
+			navigator.mediaSession.setActionHandler('play', play);
+			navigator.mediaSession.setActionHandler('pause', pause);
+			navigator.mediaSession.setActionHandler('previoustrack', pre);
+			navigator.mediaSession.setActionHandler('nexttrack', next);
+			navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
+			navigator.mediaSession.setActionHandler('seekforward', seekForward);
+		})
 		document.getElementsByClassName('btns')[0].children[2].style.display = 'block';
 		document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
 	}
@@ -25,9 +37,6 @@ function pre(){
 			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
 			audele.src = stations[nowplaying.index].url;
 			play();
-			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name
-			});
 		}
 	} else if (nowplaying.mode == 'fav'){
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
@@ -35,9 +44,6 @@ function pre(){
 			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
 			audele.src = favstations[nowplaying.index].url;
 			play();
-			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name
-			});
 		}
 	}
 }
@@ -49,10 +55,6 @@ function next(){
 			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
 			audele.src = stations[nowplaying.index].url;
 			play();
-			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name,
-				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
-			});
 		}
 	} else if (nowplaying.mode == 'fav') {
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
@@ -60,12 +62,18 @@ function next(){
 			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
 			audele.src = favstations[nowplaying.index].url;
 			play();
-			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name,
-				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
-			});
 		}
 	}
+}
+
+function seekForward() {
+	const skipTime = arguments[0] ?? 10;
+	audele.currentTime = Math.min(audele.currentTime + skipTime, audele.duration);
+}
+
+function seekBackward() {
+	const skipTime = arguments[0] ?? 10;
+	audele.currentTime = Math.max(audele.currentTime - skipTime, 0);
 }
 
 function fav(){
@@ -123,19 +131,14 @@ audele.addEventListener('play', e => {play()});
 audele.addEventListener('pause', e => {pause()});
 
 window.addEventListener('keydown', (e) => {
-	if(e.keyCode == 32){
+	if (e.keyCode === 32) {
 		e.preventDefault();
 		e.stopPropagation();
 		audele.paused ? play() : pause();
 	}
-})
-
-navigator.mediaSession.metadata = new MediaMetadata({
-    artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
 });
 
-navigator.mediaSession.setActionHandler('play', play())
-navigator.mediaSession.setActionHandler('pause', pause())
-navigator.mediaSession.setActionHandler('stop', function(){pause()});
-navigator.mediaSession.setActionHandler('previoustrack', function() {pre()});
-navigator.mediaSession.setActionHandler('nexttrack', function() {next();});
+document.getElementById('stn-search-query').addEventListener('keyup', (e) => {
+	e.preventDefault();
+	console.log(e.key);
+});

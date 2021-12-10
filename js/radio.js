@@ -1,8 +1,15 @@
 var db = new Localbase('radio');
 var nowplaying = {"index": null, "mode": null, "name" : null, "url": null, "country": null};
 var stations = [];
-fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stations = result).then(() => {getFavStaions(); listbrowsedstations(); audele.src = stations[0].url; nply.innerText = stations[0].name; nowplaying = {"index": 0, "mode": 'bwr', "name" : stations[0].name, "url": stations[0].url, "country": stations[0].country};});
 var favstations = [];
+fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stations = result).then(() => {
+    getFavStaions();
+    listbrowsedstations();
+    audele.src = stations[0].url;
+    nply.innerText = stations[0].name;
+    document.title = stations[0].name;
+    nowplaying = { "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "country": stations[0].country };
+});
 
 function listbrowsedstations(){
     browselist.innerHTML = null;
