@@ -138,6 +138,9 @@ window.addEventListener('keydown', (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		audele.paused ? play() : pause();
+	} else if (searchState && e.key == 'Escape') {
+		e.preventDefault();
+		document.getElementById('schBtn').click();
 	}
 });
 
