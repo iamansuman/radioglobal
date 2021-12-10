@@ -11,3 +11,4 @@ So, the actual owner of thier respective assests must be honored for thier contr
 * `Image` `Previous` => [FlatIcon/Smashicons](https://www.flaticon.com/authors/smashicons)
 * `Image` `Next` => [FlatIcon/Smashicons](https://www.flaticon.com/authors/smashicons)
 * `Image` `Heart/Favourite` => [FlatIcon/freepik](https://www.flaticon.com/authors/freepik)
+* `Image` `Search` => [svgrepo/SVG Repo](https://www.svgrepo.com/svg/14071/search)

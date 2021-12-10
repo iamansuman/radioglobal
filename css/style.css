@@ -11,26 +11,28 @@
 body{
     background-color: #1e1e1e;
     scroll-behavior: smooth;
+    overflow: hidden;
 }
 
 .nav-list {
     height: 8vh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    list-style-type: none;
     overflow: hidden;
     background-color: #000;
     z-index: 99;
 }
 
-.nav-list li a, .nav-list li span {
+.nav-list ul li a, .nav-list img, .nav-list ul li span {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 4vh;
     text-decoration: none;
 }
+
+.search-mode{ left: 0 !important; transition: 1.5s; }
 
 #brwbtn, #favbtn{
     background-color: #000;

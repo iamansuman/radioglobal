@@ -17,11 +17,15 @@
 </head>
 
 <body onload="innerWidth >= 600 ? changeindicator() : changeindicatormobile();" onhashchange="innerWidth >= 600 ? changeindicator() : changeindicatormobile();">
-    <ul class="nav-list">
-        <li><span style="font-weight: bold;">Radio Global</span></li>
-        <li><a id="brwbtn" href="#all">Browse</a></li>
-        <li><a id="favbtn" href="#fav">Favorites</a></li>
-    </ul>
+    <div class="nav-list">
+        <ul style="display: flex; align-items: center; list-style-type: none; height: 8vh;">
+            <li><span style="font-weight: bolder; border-right: 2px solid #fff;">Radio Global</span></li>
+            <li><a id="brwbtn" href="#all">Browse</a></li>
+            <li><a id="favbtn" href="#fav">Favorites</a></li>
+        </ul>
+        <img src="./svg/search.svg" onclick="document.getElementById('stn-search-query').classList.toggle('search-mode')" ondragstart="return false;" style="height: 4vh; cursor: pointer; z-index: 101;">
+        <input type="text" id="stn-search-query" placeholder="Search RadioGlobal (All)..." style="position: fixed; padding: 0 5vw; background-color: #000; outline: none; border: none; width: 100vw; height: 8vh; z-index: 100; left: 100vw; transition: 1.5s;"/>
+    </div>
 
     <div id="interact">
         <section id="all">
