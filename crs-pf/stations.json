@@ -3,7 +3,7 @@
     {"name":"Radio Bhubaneswar", "region": "Bhubaneswar", "country": "India", "url":"https://radioindia.net/radio/bhubants/icecast.audio"},
     {"name":"Radio Quarantine Kolkata", "region": "Kolakata", "country": "India", "url":"https://node-12.zeno.fm/krk4kw830tzuv"},
     {"name":"BBC World Service", "region": "London", "country": "UK", "url":"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"},
-    {"name":"The Beat", "region": "Norway", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
+    {"name":"The Beat", "region": "Oslo", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
     {"name":"J-Pop Powerplay Kawaii", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3060/;?type=http"},
     {"name":"J-Pop Powerplay", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
     {"name":"J-Rock Powerplay", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},

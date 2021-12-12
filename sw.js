@@ -16,7 +16,7 @@ self.addEventListener("activate", (e) => {
           cacheNames.map(cache => {
             if (cache !== cacheName) {
               return caches.delete(cache);
-             }
+            }
           })
         );
      })
