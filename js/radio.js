@@ -78,7 +78,7 @@ function listbrowsedstations(){
             browselist.appendChild(li);
         });
     } else {
-        browselist.innerHTML = "No Stations Found 📶";
+        browselist.innerHTML = "<center>No Stations Found 📶</center>";
     }
 }
 
@@ -121,13 +121,13 @@ function listfavdstations(){
             favlist.appendChild(li);
         });
     } else {
-        favlist.innerHTML = "No Favourite Stations Found 📶";
+        favlist.innerHTML = "<center>No Favourite Stations Found 📶</center>";
     }
 }
 
 function searchStation(query) {
     if (query === "") {
-        schlist.innerHTML = "Type Your Query in Search Text Box 🔍";
+        schlist.innerHTML = "<center>Type Your Query in Search Text Box 🔍</center>";
         return;
     }
 
@@ -178,7 +178,7 @@ function searchStation(query) {
             schlist.appendChild(li);
         });
     } else {
-        schlist.innerHTML = "No Stations Found 📶";
+        schlist.innerHTML = "<center>No Stations Found 📶</center>";
     }
 }
 
