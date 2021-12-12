@@ -14,8 +14,19 @@
     <link rel="stylesheet" href="./css/resp.css">
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
     <title>Radio</title>
+    <script defer src="https://unpkg.com/localbase@0.7.5/dist/localbase.min.js"></script>
+    <script defer src="./js/script.js"></script>
+    <script defer src="./js/radio.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log("Service worker registered"))
+                    .catch(err => console.error(`Service Worker Error: ${err}`));
+            });
+        } else console.warn(`serviceWorker is not supported by the browser`);
+    </script>
 </head>
-
 <body onload="innerWidth >= 600 ? changeindicator() : changeindicatormobile();" onhashchange="innerWidth >= 600 ? changeindicator() : changeindicatormobile();">
     <div class="nav-list">
         <ul style="display: flex; align-items: center; list-style-type: none; height: 8vh;">
@@ -59,9 +70,5 @@
         </div>
         
     </div>
-    <script defer src="https://unpkg.com/localbase@0.7.5/dist/localbase.min.js"></script>
-    <script defer src="./js/script.js"></script>
-    <script defer src="./js/radio.js"></script>
 </body>
-
 </html>

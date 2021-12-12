@@ -6,6 +6,11 @@
     "display": "fullscreen",
     "icons": [
       {
+        "src": "img/radiox192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
         "src": "img/radio.png",
         "sizes": "512x512",
         "type": "image/png"
