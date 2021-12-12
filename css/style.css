@@ -117,18 +117,6 @@ body{
     align-items: center;
 }
 
-.indicator{
-    position: fixed;
-    align-self: flex-start;
-    height: 50px;
-    width: 100px;
-    left: 0;
-    transform: rotate(90deg) translate(50%, 50%);
-    background-color: rgba(0, 0, 0, 0.6);
-    text-align: center;
-    font-size: larger;
-}
-
 .box {
     margin: auto;
     padding-top: 1em;
