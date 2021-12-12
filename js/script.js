@@ -109,18 +109,6 @@ function rmfav(){
 }
 
 function changeindicator(){
-	document.getElementById('brwbtn').style.backgroundColor = 'rgba(0, 0, 0)';
-	document.getElementById('favbtn').style.backgroundColor = 'rgba(0, 0, 0)';
-	if (document.location.hash == "#fav"){
-		document.getElementsByClassName('indicator')[0].innerText = "Favorites";
-	} else if (document.location.hash == "#sch") {
-		document.getElementsByClassName('indicator')[0].innerText = "Search";
-	} else {
-		document.getElementsByClassName('indicator')[0].innerText = "Browse";
-	}
-}
-
-function changeindicatormobile(){
 	if (document.location.hash == "#fav"){
 		document.getElementById('brwbtn').style.backgroundColor = 'rgba(0, 0, 0)';
 		document.getElementById('favbtn').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
@@ -129,11 +117,6 @@ function changeindicatormobile(){
 		document.getElementById('brwbtn').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
 	}
 }
-
-window.addEventListener('resize', (e) => {
-	e.preventDefault();
-	innerWidth >= 600 ? changeindicator() : changeindicatormobile();
-});
 
 audele.addEventListener('play', play);
 audele.addEventListener('pause', pause);
