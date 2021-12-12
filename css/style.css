@@ -48,34 +48,41 @@ body{
     right: 0;
     bottom: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
-    height: 12vh;
+    height: 18vh;
     width: 100vw;
     background-color: #000;
     z-index: 99;
 }
 
 #nowplaying{
-    padding-right: 10px;
-    padding: 15px;
-    width: 20vw;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: center;
+}
+
+#nowplaying > * {
+    margin: 0 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
     text-align: center;
     font-size: larger;
     font-family: 'Comfortaa', cursive;
     font-style: italic;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 12px;
+    border-radius: 1rem;
 }
 
 .btns{
-    width: 50vw;
+    width: 90vw;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 }
 

@@ -3,7 +3,9 @@ const browselist = document.getElementById('allbox');
 const favlist = document.getElementById('favbox');
 const schlist = document.getElementById('searchbox');
 const searchquery = document.getElementById('stn-search-query');
-const nply = document.getElementById('nowplaying');
+const npl_tit = document.getElementById('nowplaying-title');
+const npl_reg = document.getElementById('nowplaying-region');
+const npl_coun = document.getElementById('nowplaying-country');
 var searchState = false;
 
 function play(){
@@ -21,14 +23,14 @@ function play(){
 			navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
 			navigator.mediaSession.setActionHandler('seekforward', seekForward);
 		})
-		document.getElementsByClassName('btns')[0].children[2].style.display = 'block';
-		document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
+		document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
+		document.getElementsByClassName('btns')[0].children[3].style.display = 'none';
 	}
 }
 
 function pause(){
-	document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
-	document.getElementsByClassName('btns')[0].children[2].style.display = 'none';
+	document.getElementsByClassName('btns')[0].children[3].style.display = 'block';
+	document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
 	audele.pause();
 }
 
@@ -36,7 +38,7 @@ function pre(){
 	if (nowplaying.mode == 'bwr'){
 		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
 			nowplaying.index = (nowplaying.index - 1 + stations.length) % stations.length;
-			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			nowplaying.name = document.title = npl_tit.innerText = stations[nowplaying.index].name;
 			pause();
 			audele.src = stations[nowplaying.index].url;
 			play();
@@ -44,7 +46,7 @@ function pre(){
 	} else if (nowplaying.mode == 'fav'){
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
 			nowplaying.index = (nowplaying.index - 1 + favstations.length) % favstations.length;
-			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			nowplaying.name = document.title = npl_tit.innerText = favstations[nowplaying.index].name;
 			pause();
 			audele.src = favstations[nowplaying.index].url;
 			play();
@@ -56,7 +58,7 @@ function next(){
 	if (nowplaying.mode == 'bwr'){
 		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
 			nowplaying.index = (nowplaying.index + 1) % stations.length;
-			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			nowplaying.name = document.title = npl_tit.innerText = stations[nowplaying.index].name;
 			pause();
 			audele.src = stations[nowplaying.index].url;
 			play();
@@ -64,7 +66,7 @@ function next(){
 	} else if (nowplaying.mode == 'fav') {
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
 			nowplaying.index = (nowplaying.index + 1) % favstations.length;
-			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			nowplaying.name = document.title = npl_tit.innerText = favstations[nowplaying.index].name;
 			pause();
 			audele.src = favstations[nowplaying.index].url;
 			play();
@@ -85,8 +87,8 @@ function seekBackward() {
 function fav(){
 	if (nowplaying.index != null){
 		db.collection('favstns').add(stations[nowplaying.index]).then(() => {
-			document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
-			document.getElementsByClassName('btns')[0].children[5].style.display = 'block';
+			document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
+			document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
 			getFavStaions();
 		});
 	}
@@ -95,8 +97,8 @@ function fav(){
 function rmfav(){
 	if (nowplaying != null){
 		db.collection('favstns').doc({url: nowplaying.url}).delete().then(() => {
-			document.getElementsByClassName('btns')[0].children[5].style.display = 'none';
-			document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
+			document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
+			document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
 			getFavStaions();
 		});
 		nowplaying.mode = 'bwr';
@@ -106,6 +108,18 @@ function rmfav(){
 		});
 		nowplaying.index = i;
 	}
+}
+
+function mute() {
+	document.getElementsByClassName('btns')[0].children[6].style.display = 'none';
+	document.getElementsByClassName('btns')[0].children[7].style.display = 'block';
+	audele.volume = 0;
+}
+
+function unmute() {
+	document.getElementsByClassName('btns')[0].children[7].style.display = 'none';
+	document.getElementsByClassName('btns')[0].children[6].style.display = 'block';
+	audele.volume = 1;
 }
 
 function changeindicator(){

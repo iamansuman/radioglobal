@@ -59,14 +59,20 @@
 
     <div id="player">
         <audio id="aud" title=""></audio>
-        <span id="nowplaying">- - - - - - -</span>
+        <div id="nowplaying">
+            <span id="nowplaying-country" style="width: 20%;">- - - - - - -</span>
+            <span id="nowplaying-region" style="width: 20%;">- - - - - - -</span>
+            <span id="nowplaying-title" style="width: 50%;">- - - - - - -</span>
+        </div>
         <div class="btns">
+            <img src="./svg/notfav.svg" onclick="fav()" ondragstart="return false;">
+            <img src="./svg/fav.svg" style="display: none;" onclick="rmfav()" ondragstart="return false;">
             <img src="./svg/pre.svg" onclick="pre()" ondragstart="return false;">
             <img src="./svg/play.svg" onclick="play()" ondragstart="return false;">
             <img src="./svg/pause.svg" style="display: none;" onclick="pause()" ondragstart="return false;">
             <img src="./svg/next.svg" onclick="next()" ondragstart="return false;">
-            <img src="./svg/notfav.svg" onclick="fav()" ondragstart="return false;">
-            <img src="./svg/fav.svg" style="display: none;" onclick="rmfav()" ondragstart="return false;">
+            <img src="./svg/unmuted.svg" onclick="mute()" ondragstart="return false;">
+            <img src="./svg/muted.svg" style="display: none;" onclick="unmute()" ondragstart="return false;">
         </div>
         
     </div>

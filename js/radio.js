@@ -1,14 +1,11 @@
 var db = new Localbase('radio');
-var nowplaying = {"index": null, "mode": null, "name" : null, "url": null, "country": null};
+var nowplaying = {"index": null, "mode": null, "name" : null, "url": null, "region": null, "country": null};
 var stations = [];
 var favstations = [];
 fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stations = result).then(() => {
     getFavStaions();
     listbrowsedstations();
-    audele.src = stations[0].url;
-    nply.innerText = stations[0].name;
-    document.title = stations[0].name;
-    nowplaying = { "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "country": stations[0].country };
+    nowplaying = { "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "region": stations[0].region, "country": stations[0].country };
 });
 
 function listbrowsedstations(){
@@ -21,23 +18,25 @@ function listbrowsedstations(){
 
             li.setAttribute('data-name', station.name);
             li.setAttribute('data-nation', station.country);
+            li.setAttribute('data-region', station.region);
             li.setAttribute('data-url', station.url);
             li.addEventListener('click', function(e){
                 e.stopPropagation();
                 e.preventDefault();
                 nowplaying.index = i;
                 nowplaying.mode = 'bwr';
-                nowplaying.name = nply.innerText = li.getAttribute('data-name')
-                nowplaying.country = li.getAttribute('data-nation');
+                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
+                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
                 pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[5].style.display = 'none';
-		        document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
+                document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
+		        document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
                 favstations.forEach((ei) => {
                     if (ei.url == li.getAttribute('data-url')) {
-                        document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
-		                document.getElementsByClassName('btns')[0].children[5].style.display = 'block';
+                        document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
+		                document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
                     }
                 });
                 play();
@@ -68,19 +67,21 @@ function listfavdstations(){
 
             li.setAttribute('data-name', station.name);
             li.setAttribute('data-nation', station.country);
+            li.setAttribute('data-region', station.region);
             li.setAttribute('data-url', station.url);
             li.addEventListener('click', function(e){
                 e.stopPropagation();
                 e.preventDefault();
                 nowplaying.index = i;
                 nowplaying.mode = 'fav';
-                nowplaying.name = nply.innerText = li.getAttribute('data-name')
-                nowplaying.country = li.getAttribute('data-nation');
+                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
+                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
                 pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
-		        document.getElementsByClassName('btns')[0].children[5].style.display = 'block';
+                document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
+		        document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
                 play();
             });
             name.textContent = station.name;
@@ -118,22 +119,24 @@ function searchStation(query) {
 
             li.setAttribute('data-name', station.name);
             li.setAttribute('data-nation', station.country);
+            li.setAttribute('data-region', station.region);
             li.setAttribute('data-url', station.url);
             li.addEventListener('click', function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 nowplaying.index = stations.findIndex((stn) => { return stn.url == station.url });
                 nowplaying.mode = 'bwr';
-                nowplaying.name = nply.innerText = li.getAttribute('data-name')
-                nowplaying.country = li.getAttribute('data-nation');
+                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
+                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[5].style.display = 'none';
-                document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
+                document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
+                document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
                 favstations.forEach((ei) => {
                     if (ei.url == li.getAttribute('data-url')) {
-                        document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
-                        document.getElementsByClassName('btns')[0].children[5].style.display = 'block';
+                        document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
+                        document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
                     }
                 });
                 play();
