@@ -140,7 +140,7 @@ window.addEventListener('keydown', (e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		audele.paused ? play() : pause();
-	} else if (searchState && e.key == 'Escape') {
+	} else if ((searchState && e.key == 'Escape') || (!searchState && (e.key == 's' || e.key == 'S'))) {
 		e.preventDefault();
 		document.getElementById('schBtn').click();
 	}
@@ -156,6 +156,7 @@ document.getElementById('schBtn').addEventListener('click', () => {
 	} else {
 		searchquery.classList.add('search-mode');
 		location.hash = 'sch';
+		document.getElementById('stn-search-query').focus();
 		searchState = true;
 	}
 })
