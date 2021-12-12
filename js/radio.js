@@ -6,6 +6,31 @@ fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stati
     getFavStaions();
     listbrowsedstations();
     nowplaying = { "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "region": stations[0].region, "country": stations[0].country };
+    npl_coun.innerText = nowplaying.country;
+    npl_reg.innerText = nowplaying.region;
+    npl_tit.innerText = nowplaying.name;
+    audele.src = nowplaying.url;
+    const USP = new URLSearchParams(location.search);
+    USPStation:if (USP.has('station')) {
+        let station = stations[parseInt(USP.get('station'))];
+        if (!station) break USPStation;
+        nowplaying.index = parseInt(USP.get('station'));
+        nowplaying.mode = 'bwr';
+        nowplaying.country = npl_coun.innerText = station.country;
+        npl_reg.innerText = station.region;
+        document.title = nowplaying.name = npl_tit.innerText = station.name;
+        audele.src = nowplaying.url = station.url;
+    }
+    setTimeout(() => {
+        favstations.forEach((ei) => {
+            console.log(ei);
+            if (ei.url == nowplaying.url) {
+                document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
+                document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+            }
+        });
+    }, 75);
+    play();
 });
 
 function listbrowsedstations(){
