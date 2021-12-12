@@ -15,14 +15,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/newINVBWicon2.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.glappy.radioglobal"
+      "package": "ga.radioglobal"
     },
     "web": {
       "favicon": "./assets/newINVBWicon.png"
