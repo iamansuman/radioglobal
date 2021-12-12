@@ -30,6 +30,7 @@ function listbrowsedstations(){
                 nowplaying.name = nply.innerText = li.getAttribute('data-name')
                 nowplaying.country = li.getAttribute('data-nation');
                 document.title = li.getAttribute('data-name');
+                pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
                 document.getElementsByClassName('btns')[0].children[5].style.display = 'none';
 		        document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
@@ -76,6 +77,7 @@ function listfavdstations(){
                 nowplaying.name = nply.innerText = li.getAttribute('data-name')
                 nowplaying.country = li.getAttribute('data-nation');
                 document.title = li.getAttribute('data-name');
+                pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
                 document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
 		        document.getElementsByClassName('btns')[0].children[5].style.display = 'block';

@@ -11,6 +11,7 @@ function play(){
 		audele.play().then(() => { 
 			navigator.mediaSession.metadata = new MediaMetadata({
 				title: stations[nowplaying.index].name ?? document.title,
+				artist: `${stations[nowplaying.index].region}, ${stations[nowplaying.index].country}`,
 				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
 			});
 			navigator.mediaSession.setActionHandler('play', play);
@@ -36,6 +37,7 @@ function pre(){
 		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
 			nowplaying.index = (nowplaying.index - 1 + stations.length) % stations.length;
 			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			pause();
 			audele.src = stations[nowplaying.index].url;
 			play();
 		}
@@ -43,6 +45,7 @@ function pre(){
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
 			nowplaying.index = (nowplaying.index - 1 + favstations.length) % favstations.length;
 			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			pause();
 			audele.src = favstations[nowplaying.index].url;
 			play();
 		}
@@ -54,6 +57,7 @@ function next(){
 		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
 			nowplaying.index = (nowplaying.index + 1) % stations.length;
 			nowplaying.name = document.title = nply.innerText = stations[nowplaying.index].name;
+			pause();
 			audele.src = stations[nowplaying.index].url;
 			play();
 		}
@@ -61,6 +65,7 @@ function next(){
 		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
 			nowplaying.index = (nowplaying.index + 1) % favstations.length;
 			nowplaying.name = document.title = nply.innerText = favstations[nowplaying.index].name;
+			pause();
 			audele.src = favstations[nowplaying.index].url;
 			play();
 		}
