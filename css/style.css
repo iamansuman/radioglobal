@@ -122,17 +122,17 @@ body{
 
 .box {
     margin: auto;
-    padding-left: 0;
+    padding-top: 1em;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-width: 50%;
     width: auto;
     max-width: 90%;
-    min-height: 75%;
-    height: auto;
-    max-height: 95%;
+    /* min-height: 75%; */
+    height: 71vh;
+    /* max-height: 95%; */
     color: #fff;
     background-color: rgba(0, 0, 0, 0.6);
     border: 2px solid #fff;
@@ -142,10 +142,15 @@ body{
 .box ul{
     list-style-type: none;
     width: 80%;
+    height: 70vh;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 50vh;
+    scrollbar-width: thin;
 }
+
+.box ul::-webkit-scrollbar{ width: 0.5rem }
+.box ul::-webkit-scrollbar-track{ background-color: #000; border-radius: 2rem }
+.box ul::-webkit-scrollbar-thumb{ background-color: #1e1e1e; border-radius: 2rem; cursor: grab }
 
 .box ul li{
     display: flex;

@@ -1,22 +1,22 @@
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 650px) {
+    .indicator{ display: none }
+    .nations{ display: none }
+    .nav-list li a { padding: 3vh !important }
     .box{
-        height: 75vh;
+        height: 70vh;
         margin-top: 10px;
         width: 90%;
     }
-    .indicator{
-        display: none;
+    .box ul{
+        height: 69vh;
     }
-    .nations{
-        display: none;
-    }
-    #allbox li, #favbox li{
+    .box ul li{
         padding-top: 10px;
         border-bottom: 2px solid rgba(255, 255, 255, 0.5);
     }
     #player{
-        padding: 5px;
-        height: auto;
+        padding: 10px;
+        height: 15vh;
         flex-direction: column;
     }
     #nowplaying{
