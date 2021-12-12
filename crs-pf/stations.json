@@ -1,13 +1,13 @@
 [
-    {"name": "Radio City Dance", "country": "India","url":"https://prclive1.listenon.in/Dance"},
-    {"name":"Radio Bhubaneswar", "country": "India", "url":"https://radioindia.net/radio/bhubants/icecast.audio"},
-    {"name":"Radio Quarantine Kolkata", "country": "India", "url":"https://node-12.zeno.fm/krk4kw830tzuv"},
-    {"name":"BBC World Service", "country": "UK", "url":"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"},
-    {"name":"The Beat", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
-    {"name":"J-Pop Powerplay Kawaii", "country": "Japan", "url":"https://kathy.torontocast.com:3060/;?type=http"},
-    {"name":"J-Pop Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
-    {"name":"J-Rock Powerplay", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},
-    {"name":"Third Rock", "country": "US", "url":"https://rfcmedia3.streamguys1.com/thirdrock.mp3"},
-    {"name":"KEXP", "country": "US", "url":"https://kexp-mp3-128.streamguys1.com/kexp128.mp3"},
-    {"name":"Washington's Top News", "country": "US", "url":"https://22203.live.streamtheworld.com/WTOPFMAAC.aac"}
+    {"name": "Radio City Dance", "region": "Bengaluru", "country": "India","url":"https://prclive1.listenon.in/Dance"},
+    {"name":"Radio Bhubaneswar", "region": "Bhubaneswar", "country": "India", "url":"https://radioindia.net/radio/bhubants/icecast.audio"},
+    {"name":"Radio Quarantine Kolkata", "region": "Kolakata", "country": "India", "url":"https://node-12.zeno.fm/krk4kw830tzuv"},
+    {"name":"BBC World Service", "region": "London", "country": "UK", "url":"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"},
+    {"name":"The Beat", "region": "Norway", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
+    {"name":"J-Pop Powerplay Kawaii", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3060/;?type=http"},
+    {"name":"J-Pop Powerplay", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3560/;?type=http"},
+    {"name":"J-Rock Powerplay", "region": "Tokyo", "country": "Japan", "url":"https://kathy.torontocast.com:3340/;?type=http"},
+    {"name":"Third Rock", "region": "America's Space Station", "country": "US", "url":"https://rfcmedia3.streamguys1.com/thirdrock.mp3"},
+    {"name":"KEXP", "region": "Seattle", "country": "US", "url":"https://kexp-mp3-128.streamguys1.com/kexp128.mp3"},
+    {"name":"Washington's Top News", "region": "Washington", "country": "US", "url":"https://22203.live.streamtheworld.com/WTOPFMAAC.aac"}
 ]
