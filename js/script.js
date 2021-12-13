@@ -23,14 +23,12 @@ function play(){
 			navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
 			navigator.mediaSession.setActionHandler('seekforward', seekForward);
 		})
-		document.getElementsByClassName('btns')[0].children[4].style.display = 'block';
-		document.getElementsByClassName('btns')[0].children[3].style.display = 'none';
+		document.getElementById('ppc-btn').src = './svg/pause.svg';
 	}
 }
 
 function pause(){
-	document.getElementsByClassName('btns')[0].children[3].style.display = 'block';
-	document.getElementsByClassName('btns')[0].children[4].style.display = 'none';
+	document.getElementById('ppc-btn').src = './svg/play.svg';
 	audele.pause();
 }
 
@@ -74,6 +72,18 @@ function next(){
 	}
 }
 
+function toggleMute() {
+	if (document.getElementById('vol-btn').getAttribute('data-mute') == 'muted') {
+		audele.volume = 1;
+		document.getElementById('vol-btn').src = './svg/unmuted.svg';
+		document.getElementById('vol-btn').setAttribute('data-mute', 'unmuted');
+	} else {
+		audele.volume = 0;
+		document.getElementById('vol-btn').src = './svg/muted.svg';
+		document.getElementById('vol-btn').setAttribute('data-mute', 'muted');
+	}
+}
+
 function seekForward() {
 	const skipTime = arguments[0] ?? 10;
 	audele.currentTime = Math.min(audele.currentTime + skipTime, audele.duration);
@@ -84,21 +94,17 @@ function seekBackward() {
 	audele.currentTime = Math.max(audele.currentTime - skipTime, 0);
 }
 
-function fav(){
-	if (nowplaying.index != null){
+function toggleFavs() {
+	if (document.getElementById('fav-btn').getAttribute('data-fav') == 'notfav' && nowplaying.index != null) {
 		db.collection('favstns').add(stations[nowplaying.index]).then(() => {
-			document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
-			document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+			document.getElementById('fav-btn').src = './svg/fav.svg';
+			document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
 			getFavStaions();
 		});
-	}
-}
-
-function rmfav(){
-	if (nowplaying != null){
+	} else if (document.getElementById('fav-btn').getAttribute('data-fav') == 'fav' && nowplaying != null) {
 		db.collection('favstns').doc({url: nowplaying.url}).delete().then(() => {
-			document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
-			document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
+			document.getElementById('fav-btn').src = './svg/notfav.svg';
+			document.getElementById('fav-btn').setAttribute('data-fav', 'notfav');
 			getFavStaions();
 		});
 		nowplaying.mode = 'bwr';
@@ -108,18 +114,6 @@ function rmfav(){
 		});
 		nowplaying.index = i;
 	}
-}
-
-function mute() {
-	document.getElementsByClassName('btns')[0].children[6].style.display = 'none';
-	document.getElementsByClassName('btns')[0].children[7].style.display = 'block';
-	audele.volume = 0;
-}
-
-function unmute() {
-	document.getElementsByClassName('btns')[0].children[7].style.display = 'none';
-	document.getElementsByClassName('btns')[0].children[6].style.display = 'block';
-	audele.volume = 1;
 }
 
 function changeindicator(){

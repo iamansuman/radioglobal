@@ -23,10 +23,9 @@ fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stati
     }
     setTimeout(() => {
         favstations.forEach((ei) => {
-            console.log(ei);
             if (ei.url == nowplaying.url) {
-                document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
-                document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+                document.getElementById('fav-btn').src = './svg/fav.svg';
+                document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
             }
         });
     }, 75);
@@ -56,12 +55,12 @@ function listbrowsedstations(){
                 document.title = li.getAttribute('data-name');
                 pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
-		        document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
+                document.getElementById('fav-btn').setAttribute('data-fav', 'notfav');
+                document.getElementById('fav-btn').src = './svg/notfav.svg';
                 favstations.forEach((ei) => {
                     if (ei.url == li.getAttribute('data-url')) {
-                        document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
-		                document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+                        document.getElementById('fav-btn').src = './svg/fav.svg';
+                        document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
                     }
                 });
                 play();
@@ -105,8 +104,8 @@ function listfavdstations(){
                 document.title = li.getAttribute('data-name');
                 pause();
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
-		        document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+                document.getElementById('fav-btn').src = './svg/fav.svg';
+                document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
                 play();
             });
             name.textContent = station.name;
@@ -156,12 +155,12 @@ function searchStation(query) {
                 npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
                 audele.src = nowplaying.url = li.getAttribute('data-url');
-                document.getElementsByClassName('btns')[0].children[1].style.display = 'none';
-                document.getElementsByClassName('btns')[0].children[0].style.display = 'block';
+                document.getElementById('fav-btn').src = './svg/notfav.svg';
+                document.getElementById('fav-btn').setAttribute('data-fav', 'notfav');
                 favstations.forEach((ei) => {
                     if (ei.url == li.getAttribute('data-url')) {
-                        document.getElementsByClassName('btns')[0].children[0].style.display = 'none';
-                        document.getElementsByClassName('btns')[0].children[1].style.display = 'block';
+                        document.getElementById('fav-btn').src = './svg/fav.svg';
+                        document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
                     }
                 });
                 play();

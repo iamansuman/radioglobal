@@ -88,17 +88,17 @@ body{
 
 .btns img{
     user-select: none;
-    width: 50px;
-    height: 50px;
+    width: 3em;
+    height: 3em;
     cursor: pointer;
-}
-
-#player img{
-    user-select: none;
     z-index: 100;
     color: #fff;
-    max-width: 50px;
-    max-height: 50px;
+}
+
+.vol-slider::after{
+    content: '';
+    width: 100vh;
+    background-color: #fff;
 }
 
 #interact{

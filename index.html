@@ -64,14 +64,12 @@
             <span id="nowplaying-title" style="width: 50%;">- - - - - - - - -</span>
         </div>
         <div class="btns">
-            <img src="./svg/notfav.svg" onclick="fav()" ondragstart="return false;">
-            <img src="./svg/fav.svg" style="display: none;" onclick="rmfav()" ondragstart="return false;">
+            <!-- <img src="./svg/notfav.svg" onclick="fav()" ondragstart="return false;"> -->
+            <img id="fav-btn" data-fav="notfav" src="./svg/notfav.svg" onclick="toggleFavs()" ondragstart="return false;">
             <img src="./svg/pre.svg" onclick="pre()" ondragstart="return false;">
-            <img src="./svg/play.svg" onclick="play()" ondragstart="return false;">
-            <img src="./svg/pause.svg" style="display: none;" onclick="pause()" ondragstart="return false;">
+            <img id="ppc-btn" data-ppc="paused" src="./svg/play.svg" onclick="audele.paused ? play() : pause()" ondragstart="return false;">
             <img src="./svg/next.svg" onclick="next()" ondragstart="return false;">
-            <img src="./svg/unmuted.svg" onclick="mute()" ondragstart="return false;">
-            <img src="./svg/muted.svg" style="display: none;" onclick="unmute()" ondragstart="return false;">
+            <img id="vol-btn" data-mute="unmuted" src="./svg/unmuted.svg" onclick="toggleMute()" ondragstart="return false;">
         </div>
         
     </div>
