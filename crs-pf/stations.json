@@ -1,6 +1,5 @@
 [
     {"name": "Radio City Dance", "region": "Bengaluru", "country": "India","url":"https://prclive1.listenon.in/Dance"},
-    {"name":"Radio Bhubaneswar", "region": "Bhubaneswar", "country": "India", "url":"https://radioindia.net/radio/bhubants/icecast.audio"},
     {"name":"Radio Quarantine Kolkata", "region": "Kolakata", "country": "India", "url":"https://node-12.zeno.fm/krk4kw830tzuv"},
     {"name":"BBC World Service", "region": "London", "country": "UK", "url":"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service"},
     {"name":"The Beat", "region": "Oslo", "country": "Norway", "url":"https://stream.oneplay.no/beatoslo128"},
