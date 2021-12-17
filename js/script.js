@@ -33,43 +33,27 @@ function pause(){
 	audele.pause();
 }
 
-function pre(){
-	if (nowplaying.mode == 'bwr'){
-		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
-			nowplaying.index = (nowplaying.index - 1 + stations.length) % stations.length;
-			nowplaying.name = document.title = npl_tit.innerText = stations[nowplaying.index].name;
-			pause();
-			audele.src = stations[nowplaying.index].url;
-			play();
-		}
-	} else if (nowplaying.mode == 'fav'){
-		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
-			nowplaying.index = (nowplaying.index - 1 + favstations.length) % favstations.length;
-			nowplaying.name = document.title = npl_tit.innerText = favstations[nowplaying.index].name;
-			pause();
-			audele.src = favstations[nowplaying.index].url;
-			play();
-		}
+function pre() {
+	let station = nowplaying.mode == 'bwr' ? stations : favstations ;
+	if (nowplaying.index >= 0 && nowplaying.index <= station.length && station.length != 0){
+		nowplaying.index = (nowplaying.index - 1 + station.length) % station.length;
+		nowplaying.name = document.title = npl_tit.innerText = station[nowplaying.index].name;
+		nowplaying.country = station[nowplaying.index].country;
+		nowplaying.region = station[nowplaying.index].region;
+		audele.src = nowplaying.url = station[nowplaying.index].url;
+		play();
 	}
 }
 
-function next(){
-	if (nowplaying.mode == 'bwr'){
-		if (nowplaying.index >= 0 && nowplaying.index <= stations.length && stations.length != 0){
-			nowplaying.index = (nowplaying.index + 1) % stations.length;
-			nowplaying.name = document.title = npl_tit.innerText = stations[nowplaying.index].name;
-			pause();
-			audele.src = stations[nowplaying.index].url;
-			play();
-		}
-	} else if (nowplaying.mode == 'fav') {
-		if (nowplaying.index >= 0 && nowplaying.index <= favstations.length && favstations.length != 0){
-			nowplaying.index = (nowplaying.index + 1) % favstations.length;
-			nowplaying.name = document.title = npl_tit.innerText = favstations[nowplaying.index].name;
-			pause();
-			audele.src = favstations[nowplaying.index].url;
-			play();
-		}
+function next() {
+	let station = nowplaying.mode == 'bwr' ? stations : favstations ;
+	if (nowplaying.index >= 0 && nowplaying.index <= station.length && station.length != 0){
+		nowplaying.index = (nowplaying.index + 1) % station.length;
+		nowplaying.name = document.title = npl_tit.innerText = station[nowplaying.index].name;
+		nowplaying.country = station[nowplaying.index].country;
+		nowplaying.region = station[nowplaying.index].region;
+		audele.src = nowplaying.url = station[nowplaying.index].url;
+		play();
 	}
 }
 
