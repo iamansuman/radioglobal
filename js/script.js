@@ -12,9 +12,9 @@ function play(){
 	if (audele.src != ""){
 		audele.play().then(() => { 
 			navigator.mediaSession.metadata = new MediaMetadata({
-				title: stations[nowplaying.index].name ?? document.title,
-				artist: `${stations[nowplaying.index].region}, ${stations[nowplaying.index].country}`,
-				artwork: [{ src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
+				title: nowplaying.name,
+				artist: `${nowplaying.region}, ${nowplaying.country}`,
+				artwork: [{ src: '.././img/radiox192.png', sizes: '192x192', type: 'image/png' }, { src: '.././img/radio.png', sizes: '512x512', type: 'image/png' }]
 			});
 			navigator.mediaSession.setActionHandler('play', play);
 			navigator.mediaSession.setActionHandler('pause', pause);
@@ -22,6 +22,7 @@ function play(){
 			navigator.mediaSession.setActionHandler('nexttrack', next);
 			navigator.mediaSession.setActionHandler('seekbackward', seekBackward);
 			navigator.mediaSession.setActionHandler('seekforward', seekForward);
+			navigator.mediaSession.playbackState = "playing";
 		})
 		document.getElementById('ppc-btn').src = './svg/pause.svg';
 	}

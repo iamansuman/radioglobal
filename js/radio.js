@@ -1,11 +1,11 @@
-var db = new Localbase('radio');
-var nowplaying = {"index": null, "mode": null, "name" : null, "url": null, "region": null, "country": null};
-var stations = [];
-var favstations = [];
-fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stations = result).then(() => {
+const db = new Localbase('radio');
+const nowplaying = {"index": null, "mode": null, "name" : null, "url": null, "region": null, "country": null};
+const stations = [];
+const favstations = [];
+fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => { result.forEach(stn => stations.push(stn)) }).then(() => {
     getFavStaions();
     listbrowsedstations();
-    nowplaying = { "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "region": stations[0].region, "country": stations[0].country };
+    changeNowPlayingTo({ "index": 0, "mode": 'bwr', "name": stations[0].name, "url": stations[0].url, "region": stations[0].region, "country": stations[0].country });
     npl_coun.innerText = nowplaying.country;
     npl_reg.innerText = nowplaying.region;
     npl_tit.innerText = nowplaying.name;
@@ -14,12 +14,10 @@ fetch('./crs-pf/stations.json').then((res) => res.json()).then((result) => stati
     USPStation:if (USP.has('station')) {
         let station = stations[parseInt(USP.get('station'))];
         if (!station) break USPStation;
-        nowplaying.index = parseInt(USP.get('station'));
-        nowplaying.mode = 'bwr';
-        nowplaying.country = npl_coun.innerText = station.country;
+        changeNowPlayingTo({ "index": parseInt(USP.get('station')), "mode": 'bwr', "name": station.name, "url": station.url, "region": station.region, "country": station.country });
         npl_reg.innerText = station.region;
-        document.title = nowplaying.name = npl_tit.innerText = station.name;
-        audele.src = nowplaying.url = station.url;
+        document.title = npl_tit.innerText = station.name;
+        audele.src = station.url;
     }
     setTimeout(() => {
         favstations.forEach((ei) => {
@@ -47,14 +45,12 @@ function listbrowsedstations(){
             li.addEventListener('click', function(e){
                 e.stopPropagation();
                 e.preventDefault();
-                nowplaying.index = i;
-                nowplaying.mode = 'bwr';
-                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
-                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                changeNowPlayingTo({ "index": i, "mode": 'bwr', "name": li.getAttribute('data-name'), "url": li.getAttribute('data-url'), "region": li.getAttribute('data-region'), "country": li.getAttribute('data-nation') });
+                npl_tit.innerText = li.getAttribute('data-name')
+                npl_coun.innerText = li.getAttribute('data-nation');
                 npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
-                pause();
-                audele.src = nowplaying.url = li.getAttribute('data-url');
+                audele.src = li.getAttribute('data-url');
                 document.getElementById('fav-btn').setAttribute('data-fav', 'notfav');
                 document.getElementById('fav-btn').src = './svg/notfav.svg';
                 favstations.forEach((ei) => {
@@ -96,14 +92,12 @@ function listfavdstations(){
             li.addEventListener('click', function(e){
                 e.stopPropagation();
                 e.preventDefault();
-                nowplaying.index = i;
-                nowplaying.mode = 'fav';
-                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
-                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                changeNowPlayingTo({ "index": i, "mode": 'fav', "name": li.getAttribute('data-name'), "url": li.getAttribute('data-url'), "region": li.getAttribute('data-region'), "country": li.getAttribute('data-nation') });
+                npl_tit.innerText = li.getAttribute('data-name')
+                npl_coun.innerText = li.getAttribute('data-nation');
                 npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
-                pause();
-                audele.src = nowplaying.url = li.getAttribute('data-url');
+                audele.src = li.getAttribute('data-url');
                 document.getElementById('fav-btn').src = './svg/fav.svg';
                 document.getElementById('fav-btn').setAttribute('data-fav', 'fav');
                 play();
@@ -148,13 +142,13 @@ function searchStation(query) {
             li.addEventListener('click', function(e){
                 e.preventDefault();
                 e.stopPropagation();
-                nowplaying.index = stations.findIndex((stn) => { return stn.url == station.url });
-                nowplaying.mode = 'bwr';
-                nowplaying.name = npl_tit.innerText = li.getAttribute('data-name')
-                nowplaying.country = npl_coun.innerText = li.getAttribute('data-nation');
+                changeNowPlayingTo({ "index": stations.findIndex((stn) => { return stn.url == station.url }), "mode": 'bwr', "name": li.getAttribute('data-name'), "url": li.getAttribute('data-url'), "region": li.getAttribute('data-region'), "country": li.getAttribute('data-nation') });
+                
+                npl_tit.innerText = li.getAttribute('data-name')
+                npl_coun.innerText = li.getAttribute('data-nation');
                 npl_reg.innerText = li.getAttribute('data-region');
                 document.title = li.getAttribute('data-name');
-                audele.src = nowplaying.url = li.getAttribute('data-url');
+                audele.src = li.getAttribute('data-url');
                 document.getElementById('fav-btn').src = './svg/notfav.svg';
                 document.getElementById('fav-btn').setAttribute('data-fav', 'notfav');
                 favstations.forEach((ei) => {
@@ -182,11 +176,20 @@ function searchStation(query) {
 }
 
 function getFavStaions() {
-    favstations = [];
-    db.collection('favstns').get().then(stn => {
-        favstations = stn != undefined ? stn : [];
+    db.collection('favstns').get().then(stns => {
+        favstations.length = 0;
+        stns.forEach(stn => favstations.push(stn));
         setTimeout(() => {listfavdstations()}, 50);
     });
+}
+
+function changeNowPlayingTo(stnObj) {
+    nowplaying.name = stnObj.name ?? 'N/A';
+    nowplaying.url = stnObj.url ?? new Error('Specify URL');
+    nowplaying.index = stnObj.index ?? 0;
+    nowplaying.mode = stnObj.mode ?? 'bwr';
+    nowplaying.country = stnObj.country ?? 'N/A';
+    nowplaying.region = stnObj.region ?? 'N/A';
 }
 
 getFavStaions();
