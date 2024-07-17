@@ -94,7 +94,7 @@ export default function Home({ navigation }) {
 
   if (!fetchedData) {
     // fetches station data from the website
-    fetch("https://radioglobal.ga/crs-pf/stations.json")
+    fetch("https://raw.githubusercontent.com/iamansuman/radioglobal/main/crs-pf/stations.json")
       .then((res) => res.json())
       .then((result) => {
         setStations(result);
